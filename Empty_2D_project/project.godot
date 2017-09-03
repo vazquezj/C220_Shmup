@@ -1,0 +1,15 @@
+config_version=3
+
+[application]
+
+config/name="Empty_2D_project"
+config/icon="res://icon.png"
+
+[display]
+
+window/size/width=480
+window/size/height=800
+
+[rendering]
+
+environment/default_environment="res://default_env.tres"
