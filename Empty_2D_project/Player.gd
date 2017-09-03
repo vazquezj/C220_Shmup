@@ -1,6 +1,7 @@
 extends Sprite
 
 func _ready():
+	print("Player is alive!")
 	pass
 
 func _process(delta):
