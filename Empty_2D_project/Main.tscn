@@ -1,13 +1,13 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Main.gd" type="Script" id=1]
 [ext_resource path="res://graphics/GalaxyBackgroundSprite.png" type="Texture" id=2]
-[ext_resource path="res://graphics/PlayerSprite.png" type="Texture" id=3]
-[ext_resource path="res://Player.gd" type="Script" id=4]
-[ext_resource path="res://Laser.gd" type="Script" id=5]
-[ext_resource path="res://graphics/LaserSprite.png" type="Texture" id=6]
-[ext_resource path="res://Enemy.gd" type="Script" id=7]
-[ext_resource path="res://graphics/EnemySprite.png" type="Texture" id=8]
+[ext_resource path="res://Laser.gd" type="Script" id=3]
+[ext_resource path="res://graphics/LaserSprite.png" type="Texture" id=4]
+[ext_resource path="res://Enemy.gd" type="Script" id=5]
+[ext_resource path="res://graphics/EnemySprite.png" type="Texture" id=6]
+[ext_resource path="res://Player.gd" type="Script" id=7]
+[ext_resource path="res://graphics/PlayerSprite.png" type="Texture" id=8]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -15,6 +15,11 @@ custom_solver_bias = 0.0
 extents = Vector2( 10, 10 )
 
 [sub_resource type="RectangleShape2D" id=2]
+
+custom_solver_bias = 0.0
+extents = Vector2( 10, 10 )
+
+[sub_resource type="RectangleShape2D" id=3]
 
 custom_solver_bias = 0.0
 extents = Vector2( 10, 10 )
@@ -28,15 +33,37 @@ script = ExtResource( 1 )
 position = Vector2( 240.649, 269.354 )
 texture = ExtResource( 2 )
 
-[node name="Player" type="Sprite" parent="."]
-
-position = Vector2( 244.75, 711.426 )
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
-
 [node name="Laser" type="Area2D" parent="."]
 
-position = Vector2( 244.476, 644.825 )
+position = Vector2( -45.2838, 685.636 )
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+audio_bus_override = false
+audio_bus_name = "Master"
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="LaserSprite" type="Sprite" parent="Laser"]
+
+scale = Vector2( 2.22177, 2.22177 )
+texture = ExtResource( 4 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Laser"]
+
+visible = false
+position = Vector2( 0.0433071, 0.479895 )
+scale = Vector2( 0.513862, 1.71288 )
+shape = SubResource( 1 )
+
+[node name="Enemy" type="Area2D" parent="."]
+
+position = Vector2( 415.221, -68.6845 )
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
 gravity = 98.0
@@ -49,21 +76,23 @@ __meta__ = {
 "_edit_group_": true
 }
 
-[node name="LaserSprite" type="Sprite" parent="Laser"]
+[node name="EnemySprite" type="Sprite" parent="Enemy"]
 
-scale = Vector2( 2.22177, 2.22177 )
+rotation = 3.14159
+scale = Vector2( 0.590839, 0.590839 )
 texture = ExtResource( 6 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Laser"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy"]
 
-position = Vector2( 0.0433071, 0.479895 )
-scale = Vector2( 0.513862, 1.71288 )
-shape = SubResource( 1 )
+visible = false
+position = Vector2( 0.147951, -0.132158 )
+scale = Vector2( 4.12046, 6.14963 )
+shape = SubResource( 2 )
 
-[node name="Enemy" type="Area2D" parent="."]
+[node name="Player" type="Area2D" parent="."]
 
-position = Vector2( 247.895, -65.9638 )
+position = Vector2( 242.147, 688.35 )
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
 gravity = 98.0
@@ -72,23 +101,21 @@ angular_damp = 1.0
 audio_bus_override = false
 audio_bus_name = "Master"
 script = ExtResource( 7 )
-__meta__ = {
-"_edit_group_": true
-}
 
-[node name="EnemySprite" type="Sprite" parent="Enemy"]
+[node name="PlayerSprite" type="Sprite" parent="Player"]
 
-rotation = 3.14159
-scale = Vector2( 0.590839, 0.590839 )
 texture = ExtResource( 8 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
 
-position = Vector2( 0.147951, -0.132158 )
-scale = Vector2( 4.12046, 6.14963 )
-shape = SubResource( 2 )
+visible = false
+position = Vector2( -0.198797, 0.766616 )
+scale = Vector2( 4.06381, 5.31656 )
+shape = SubResource( 3 )
 
 [connection signal="area_entered" from="Laser" to="Laser" method="_on_Laser_area_entered"]
+
+[connection signal="area_entered" from="Player" to="Player" method="_on_Player_area_entered"]
 
 
