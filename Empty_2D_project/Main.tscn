@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Main.gd" type="Script" id=1]
 [ext_resource path="res://graphics/GalaxyBackgroundSprite.png" type="Texture" id=2]
@@ -24,7 +24,12 @@ extents = Vector2( 10, 10 )
 custom_solver_bias = 0.0
 extents = Vector2( 10, 10 )
 
-[node name="Node" type="Node"]
+[sub_resource type="RectangleShape2D" id=4]
+
+custom_solver_bias = 0.0
+extents = Vector2( 10, 10 )
+
+[node name="Main" type="Node"]
 
 script = ExtResource( 1 )
 
@@ -63,7 +68,7 @@ shape = SubResource( 1 )
 
 [node name="Enemy" type="Area2D" parent="."]
 
-position = Vector2( 415.221, -68.6845 )
+position = Vector2( 566.498, -74.7139 )
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
 gravity = 98.0
@@ -114,8 +119,70 @@ position = Vector2( -0.198797, 0.766616 )
 scale = Vector2( 4.06381, 5.31656 )
 shape = SubResource( 3 )
 
+[node name="UpperWall" type="Area2D" parent="."]
+
+position = Vector2( 238.63, -243.782 )
+scale = Vector2( 7.51771, 2.5116 )
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+audio_bus_override = false
+audio_bus_name = "Master"
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="UpperWall"]
+
+visible = false
+scale = Vector2( 3.19457, 3.12483 )
+shape = SubResource( 4 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="LowerWall" type="Area2D" parent="."]
+
+position = Vector2( 240.344, 882.124 )
+scale = Vector2( 7.51771, 2.5116 )
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+audio_bus_override = false
+audio_bus_name = "Master"
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LowerWall"]
+
+visible = false
+scale = Vector2( 3.19457, 3.12483 )
+shape = SubResource( 4 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Timer" type="Timer" parent="."]
+
+process_mode = 1
+wait_time = 1.0
+one_shot = false
+autostart = true
+
+[node name="Timer2" type="Timer" parent="."]
+
+process_mode = 1
+wait_time = 1.0
+one_shot = false
+autostart = true
+
 [connection signal="area_entered" from="Laser" to="Laser" method="_on_Laser_area_entered"]
 
+[connection signal="area_entered" from="Enemy" to="Enemy" method="_on_Enemy_area_entered"]
+
 [connection signal="area_entered" from="Player" to="Player" method="_on_Player_area_entered"]
+
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
 
 
