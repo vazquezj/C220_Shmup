@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Main.gd" type="Script" id=1]
 [ext_resource path="res://graphics/GalaxyBackgroundSprite.png" type="Texture" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://graphics/EnemySprite.png" type="Texture" id=6]
 [ext_resource path="res://Player.gd" type="Script" id=7]
 [ext_resource path="res://graphics/PlayerSprite.png" type="Texture" id=8]
+[ext_resource path="res://Score.gd" type="Script" id=9]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -40,15 +41,19 @@ texture = ExtResource( 2 )
 
 [node name="Laser" type="Area2D" parent="."]
 
+editor/display_folded = true
 position = Vector2( -45.2838, 685.636 )
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
 gravity = 98.0
 linear_damp = 0.1
 angular_damp = 1.0
+collision_layer = 2
+collision_mask = 4
 audio_bus_override = false
 audio_bus_name = "Master"
 script = ExtResource( 3 )
+_sections_unfolded = [ "Collision" ]
 __meta__ = {
 "_edit_group_": true
 }
@@ -68,15 +73,18 @@ shape = SubResource( 1 )
 
 [node name="Enemy" type="Area2D" parent="."]
 
+editor/display_folded = true
 position = Vector2( 566.498, -74.7139 )
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
 gravity = 98.0
 linear_damp = 0.1
 angular_damp = 1.0
+collision_layer = 4
 audio_bus_override = false
 audio_bus_name = "Master"
 script = ExtResource( 5 )
+_sections_unfolded = [ "Collision" ]
 __meta__ = {
 "_edit_group_": true
 }
@@ -97,6 +105,7 @@ shape = SubResource( 2 )
 
 [node name="Player" type="Area2D" parent="."]
 
+editor/display_folded = true
 position = Vector2( 242.147, 688.35 )
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
@@ -106,6 +115,7 @@ angular_damp = 1.0
 audio_bus_override = false
 audio_bus_name = "Master"
 script = ExtResource( 7 )
+_sections_unfolded = [ "Collision" ]
 
 [node name="PlayerSprite" type="Sprite" parent="Player"]
 
@@ -121,6 +131,7 @@ shape = SubResource( 3 )
 
 [node name="UpperWall" type="Area2D" parent="."]
 
+editor/display_folded = true
 position = Vector2( 238.63, -243.782 )
 scale = Vector2( 7.51771, 2.5116 )
 input_pickable = true
@@ -143,6 +154,7 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="LowerWall" type="Area2D" parent="."]
 
+editor/display_folded = true
 position = Vector2( 240.344, 882.124 )
 scale = Vector2( 7.51771, 2.5116 )
 input_pickable = true
@@ -166,16 +178,28 @@ _sections_unfolded = [ "Transform" ]
 [node name="Timer" type="Timer" parent="."]
 
 process_mode = 1
-wait_time = 1.0
+wait_time = 0.5
 one_shot = false
 autostart = true
 
-[node name="Timer2" type="Timer" parent="."]
+[node name="ScoreLabel" type="Label" parent="."]
 
-process_mode = 1
-wait_time = 1.0
-one_shot = false
-autostart = true
+margin_left = 16.0
+margin_top = 12.0
+margin_right = 96.0
+margin_bottom = 32.0
+rect_scale = Vector2( 2, 2 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+size_flags_horizontal = 1
+size_flags_vertical = 4
+text = "Score:"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+script = ExtResource( 9 )
+_sections_unfolded = [ "Rect" ]
 
 [connection signal="area_entered" from="Laser" to="Laser" method="_on_Laser_area_entered"]
 
