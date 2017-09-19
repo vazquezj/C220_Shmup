@@ -6,4 +6,5 @@ func _ready():
 	pass
 
 func increase_score():
-	self.text = str(Score)
+	self.Score += 10
+	self.text = "Score: " + str(Score)

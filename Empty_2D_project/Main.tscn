@@ -9,6 +9,7 @@
 [ext_resource path="res://Player.gd" type="Script" id=7]
 [ext_resource path="res://graphics/PlayerSprite.png" type="Texture" id=8]
 [ext_resource path="res://Score.gd" type="Script" id=9]
+[ext_resource path="res://graphics/GameOverSprite.png" type="Texture" id=10]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -21,11 +22,6 @@ custom_solver_bias = 0.0
 extents = Vector2( 10, 10 )
 
 [sub_resource type="RectangleShape2D" id=3]
-
-custom_solver_bias = 0.0
-extents = Vector2( 10, 10 )
-
-[sub_resource type="RectangleShape2D" id=4]
 
 custom_solver_bias = 0.0
 extents = Vector2( 10, 10 )
@@ -129,52 +125,6 @@ position = Vector2( -0.198797, 0.766616 )
 scale = Vector2( 4.06381, 5.31656 )
 shape = SubResource( 3 )
 
-[node name="UpperWall" type="Area2D" parent="."]
-
-editor/display_folded = true
-position = Vector2( 238.63, -243.782 )
-scale = Vector2( 7.51771, 2.5116 )
-input_pickable = true
-gravity_vec = Vector2( 0, 1 )
-gravity = 98.0
-linear_damp = 0.1
-angular_damp = 1.0
-audio_bus_override = false
-audio_bus_name = "Master"
-__meta__ = {
-"_edit_group_": true
-}
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="UpperWall"]
-
-visible = false
-scale = Vector2( 3.19457, 3.12483 )
-shape = SubResource( 4 )
-_sections_unfolded = [ "Transform" ]
-
-[node name="LowerWall" type="Area2D" parent="."]
-
-editor/display_folded = true
-position = Vector2( 240.344, 882.124 )
-scale = Vector2( 7.51771, 2.5116 )
-input_pickable = true
-gravity_vec = Vector2( 0, 1 )
-gravity = 98.0
-linear_damp = 0.1
-angular_damp = 1.0
-audio_bus_override = false
-audio_bus_name = "Master"
-__meta__ = {
-"_edit_group_": true
-}
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LowerWall"]
-
-visible = false
-scale = Vector2( 3.19457, 3.12483 )
-shape = SubResource( 4 )
-_sections_unfolded = [ "Transform" ]
-
 [node name="Timer" type="Timer" parent="."]
 
 process_mode = 1
@@ -194,12 +144,19 @@ rect_clip_content = false
 mouse_filter = 2
 size_flags_horizontal = 1
 size_flags_vertical = 4
-text = "Score:"
+text = "Score: 0"
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 script = ExtResource( 9 )
 _sections_unfolded = [ "Rect" ]
+
+[node name="GameOver" type="Sprite" parent="."]
+
+visible = false
+position = Vector2( 247.204, 364.777 )
+texture = ExtResource( 10 )
+_sections_unfolded = [ "Visibility" ]
 
 [connection signal="area_entered" from="Laser" to="Laser" method="_on_Laser_area_entered"]
 

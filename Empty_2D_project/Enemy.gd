@@ -7,6 +7,5 @@ func _process(delta):
 
 func _on_Enemy_area_entered( area ):
 	self.queue_free()
-	$"../ScoreLabel".Score += 10
-	# $"../ScoreLabel".Text = $"../ScoreLabel".Score
-	print($"../ScoreLabel".Score)
+	area.queue_free()
+	$"../ScoreLabel".increase_score()
