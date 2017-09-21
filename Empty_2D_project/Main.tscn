@@ -2,16 +2,16 @@
 
 [ext_resource path="res://Main.gd" type="Script" id=1]
 [ext_resource path="res://graphics/GalaxyBackgroundSprite.png" type="Texture" id=2]
-[ext_resource path="res://Laser.gd" type="Script" id=3]
-[ext_resource path="res://graphics/LaserSprite.png" type="Texture" id=4]
-[ext_resource path="res://Enemy.gd" type="Script" id=5]
-[ext_resource path="res://graphics/EnemySprite.png" type="Texture" id=6]
-[ext_resource path="res://Player.gd" type="Script" id=7]
-[ext_resource path="res://graphics/PlayerSprite.png" type="Texture" id=8]
-[ext_resource path="res://Missile.gd" type="Script" id=9]
-[ext_resource path="res://graphics/MissileSprite.png" type="Texture" id=10]
-[ext_resource path="res://Score.gd" type="Script" id=11]
-[ext_resource path="res://graphics/GameOverSprite.png" type="Texture" id=12]
+[ext_resource path="res://graphics/GameOverSprite.png" type="Texture" id=3]
+[ext_resource path="res://Laser.gd" type="Script" id=4]
+[ext_resource path="res://graphics/LaserSprite.png" type="Texture" id=5]
+[ext_resource path="res://Enemy.gd" type="Script" id=6]
+[ext_resource path="res://graphics/EnemySprite.png" type="Texture" id=7]
+[ext_resource path="res://Player.gd" type="Script" id=8]
+[ext_resource path="res://graphics/PlayerSprite.png" type="Texture" id=9]
+[ext_resource path="res://Missile.gd" type="Script" id=10]
+[ext_resource path="res://graphics/MissileSprite.png" type="Texture" id=11]
+[ext_resource path="res://Score.gd" type="Script" id=12]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -42,6 +42,13 @@ script = ExtResource( 1 )
 position = Vector2( 240.649, 269.354 )
 texture = ExtResource( 2 )
 
+[node name="GameOver" type="Sprite" parent="."]
+
+visible = false
+position = Vector2( 247.204, 364.777 )
+texture = ExtResource( 3 )
+_sections_unfolded = [ "Visibility" ]
+
 [node name="Laser" type="Area2D" parent="."]
 
 editor/display_folded = true
@@ -55,7 +62,7 @@ collision_layer = 2
 collision_mask = 4
 audio_bus_override = false
 audio_bus_name = "Master"
-script = ExtResource( 3 )
+script = ExtResource( 4 )
 _sections_unfolded = [ "Collision" ]
 __meta__ = {
 "_edit_group_": true
@@ -64,7 +71,7 @@ __meta__ = {
 [node name="LaserSprite" type="Sprite" parent="Laser"]
 
 scale = Vector2( 2.22177, 2.22177 )
-texture = ExtResource( 4 )
+texture = ExtResource( 5 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Laser"]
@@ -86,7 +93,7 @@ angular_damp = 1.0
 collision_layer = 4
 audio_bus_override = false
 audio_bus_name = "Master"
-script = ExtResource( 5 )
+script = ExtResource( 6 )
 _sections_unfolded = [ "Collision" ]
 __meta__ = {
 "_edit_group_": true
@@ -96,7 +103,7 @@ __meta__ = {
 
 rotation = 3.14159
 scale = Vector2( 0.590839, 0.590839 )
-texture = ExtResource( 6 )
+texture = ExtResource( 7 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy"]
@@ -117,12 +124,12 @@ linear_damp = 0.1
 angular_damp = 1.0
 audio_bus_override = false
 audio_bus_name = "Master"
-script = ExtResource( 7 )
+script = ExtResource( 8 )
 _sections_unfolded = [ "Collision" ]
 
 [node name="PlayerSprite" type="Sprite" parent="Player"]
 
-texture = ExtResource( 8 )
+texture = ExtResource( 9 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
@@ -134,6 +141,7 @@ shape = SubResource( 3 )
 
 [node name="Missile" type="Area2D" parent="."]
 
+editor/display_folded = true
 position = Vector2( -107.449, 688.292 )
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
@@ -144,7 +152,7 @@ collision_layer = 2
 collision_mask = 4
 audio_bus_override = false
 audio_bus_name = "Master"
-script = ExtResource( 9 )
+script = ExtResource( 10 )
 _sections_unfolded = [ "Collision" ]
 __meta__ = {
 "_edit_group_": true
@@ -152,10 +160,11 @@ __meta__ = {
 
 [node name="MissileSprite" type="Sprite" parent="Missile"]
 
-texture = ExtResource( 10 )
+texture = ExtResource( 11 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Missile"]
 
+visible = false
 position = Vector2( -0.0339328, -0.20998 )
 scale = Vector2( 0.528982, 3.19782 )
 shape = SubResource( 4 )
@@ -190,15 +199,8 @@ text = "Score: 0"
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
-script = ExtResource( 11 )
+script = ExtResource( 12 )
 _sections_unfolded = [ "Rect" ]
-
-[node name="GameOver" type="Sprite" parent="."]
-
-visible = false
-position = Vector2( 247.204, 364.777 )
-texture = ExtResource( 12 )
-_sections_unfolded = [ "Visibility" ]
 
 [connection signal="area_entered" from="Laser" to="Laser" method="_on_Laser_area_entered"]
 
