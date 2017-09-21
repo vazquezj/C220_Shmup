@@ -23,4 +23,10 @@ func _on_Timer_timeout():
 	self.add_child(newEnemy)
 	newEnemy.position.x = rand_range(0, 480)
 	newEnemy.position.y = -100
-	newEnemy.Speed += rand_range(2,4)
+	newEnemy.Speed += rand_range(1,3)
+
+func _on_BossTimer_timeout():
+	var newBoss = $"Boss".duplicate()
+	self.add_child(newBoss)
+	newBoss.position.x = 240
+	newBoss.position.y = -300

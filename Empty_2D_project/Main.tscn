@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://Main.gd" type="Script" id=1]
 [ext_resource path="res://graphics/GalaxyBackgroundSprite.png" type="Texture" id=2]
@@ -11,7 +11,8 @@
 [ext_resource path="res://graphics/PlayerSprite.png" type="Texture" id=9]
 [ext_resource path="res://Missile.gd" type="Script" id=10]
 [ext_resource path="res://graphics/MissileSprite.png" type="Texture" id=11]
-[ext_resource path="res://Score.gd" type="Script" id=12]
+[ext_resource path="res://Boss.gd" type="Script" id=12]
+[ext_resource path="res://Score.gd" type="Script" id=13]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -29,6 +30,11 @@ custom_solver_bias = 0.0
 extents = Vector2( 10, 10 )
 
 [sub_resource type="RectangleShape2D" id=4]
+
+custom_solver_bias = 0.0
+extents = Vector2( 10, 10 )
+
+[sub_resource type="RectangleShape2D" id=5]
 
 custom_solver_bias = 0.0
 extents = Vector2( 10, 10 )
@@ -169,19 +175,51 @@ position = Vector2( -0.0339328, -0.20998 )
 scale = Vector2( 0.528982, 3.19782 )
 shape = SubResource( 4 )
 
+[node name="Boss" type="Area2D" parent="."]
+
+editor/display_folded = true
+position = Vector2( 670.001, 224 )
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+collision_layer = 4
+audio_bus_override = false
+audio_bus_name = "Master"
+script = ExtResource( 12 )
+_sections_unfolded = [ "Transform" ]
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="BossSprite" type="Sprite" parent="Boss"]
+
+rotation = 3.14159
+scale = Vector2( 2.16662, 2.16662 )
+texture = ExtResource( 7 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boss"]
+
+visible = false
+position = Vector2( 0.285917, 1.55667 )
+scale = Vector2( 14.2665, 22.4237 )
+shape = SubResource( 5 )
+
 [node name="Timer" type="Timer" parent="."]
 
 process_mode = 1
-wait_time = 0.5
+wait_time = 0.75
 one_shot = false
 autostart = true
 
 [node name="BossTimer" type="Timer" parent="."]
 
 process_mode = 1
-wait_time = 1.0
+wait_time = 10.0
 one_shot = false
-autostart = false
+autostart = true
 
 [node name="ScoreLabel" type="Label" parent="."]
 
@@ -199,7 +237,7 @@ text = "Score: 0"
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
-script = ExtResource( 12 )
+script = ExtResource( 13 )
 _sections_unfolded = [ "Rect" ]
 
 [connection signal="area_entered" from="Laser" to="Laser" method="_on_Laser_area_entered"]
@@ -210,6 +248,10 @@ _sections_unfolded = [ "Rect" ]
 
 [connection signal="area_entered" from="Missile" to="Missile" method="_on_Missile_area_entered"]
 
+[connection signal="area_entered" from="Boss" to="Boss" method="_on_Boss_area_entered"]
+
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+
+[connection signal="timeout" from="BossTimer" to="." method="_on_BossTimer_timeout"]
 
 
