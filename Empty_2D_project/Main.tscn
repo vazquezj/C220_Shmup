@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://Main.gd" type="Script" id=1]
 [ext_resource path="res://graphics/GalaxyBackgroundSprite.png" type="Texture" id=2]
@@ -7,12 +7,14 @@
 [ext_resource path="res://graphics/LaserSprite.png" type="Texture" id=5]
 [ext_resource path="res://Enemy.gd" type="Script" id=6]
 [ext_resource path="res://graphics/EnemySprite.png" type="Texture" id=7]
-[ext_resource path="res://Player.gd" type="Script" id=8]
-[ext_resource path="res://graphics/PlayerSprite.png" type="Texture" id=9]
-[ext_resource path="res://Missile.gd" type="Script" id=10]
-[ext_resource path="res://graphics/MissileSprite.png" type="Texture" id=11]
-[ext_resource path="res://Boss.gd" type="Script" id=12]
-[ext_resource path="res://Score.gd" type="Script" id=13]
+[ext_resource path="res://EnemyHealth.gd" type="Script" id=8]
+[ext_resource path="res://Player.gd" type="Script" id=9]
+[ext_resource path="res://graphics/PlayerSprite.png" type="Texture" id=10]
+[ext_resource path="res://Missile.gd" type="Script" id=11]
+[ext_resource path="res://graphics/MissileSprite.png" type="Texture" id=12]
+[ext_resource path="res://Boss.gd" type="Script" id=13]
+[ext_resource path="res://BossHealth.gd" type="Script" id=14]
+[ext_resource path="res://Score.gd" type="Script" id=15]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -90,7 +92,7 @@ shape = SubResource( 1 )
 [node name="Enemy" type="Area2D" parent="."]
 
 editor/display_folded = true
-position = Vector2( 566.498, -74.7139 )
+position = Vector2( 592.91, -73.439 )
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
 gravity = 98.0
@@ -119,6 +121,27 @@ position = Vector2( 0.147951, -0.132158 )
 scale = Vector2( 4.12046, 6.14963 )
 shape = SubResource( 2 )
 
+[node name="EnemyHealth" type="Label" parent="Enemy"]
+
+margin_left = -13.0
+margin_top = 33.0
+margin_right = 29.0
+margin_bottom = 60.0
+rect_scale = Vector2( 1.5, 1.5 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+size_flags_horizontal = 1
+size_flags_vertical = 4
+text = "3"
+align = 1
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+script = ExtResource( 8 )
+_sections_unfolded = [ "Rect" ]
+
 [node name="Player" type="Area2D" parent="."]
 
 editor/display_folded = true
@@ -130,12 +153,12 @@ linear_damp = 0.1
 angular_damp = 1.0
 audio_bus_override = false
 audio_bus_name = "Master"
-script = ExtResource( 8 )
+script = ExtResource( 9 )
 _sections_unfolded = [ "Collision" ]
 
 [node name="PlayerSprite" type="Sprite" parent="Player"]
 
-texture = ExtResource( 9 )
+texture = ExtResource( 10 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
@@ -158,7 +181,7 @@ collision_layer = 2
 collision_mask = 4
 audio_bus_override = false
 audio_bus_name = "Master"
-script = ExtResource( 10 )
+script = ExtResource( 11 )
 _sections_unfolded = [ "Collision" ]
 __meta__ = {
 "_edit_group_": true
@@ -166,7 +189,7 @@ __meta__ = {
 
 [node name="MissileSprite" type="Sprite" parent="Missile"]
 
-texture = ExtResource( 11 )
+texture = ExtResource( 12 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Missile"]
 
@@ -187,7 +210,7 @@ angular_damp = 1.0
 collision_layer = 4
 audio_bus_override = false
 audio_bus_name = "Master"
-script = ExtResource( 12 )
+script = ExtResource( 13 )
 _sections_unfolded = [ "Transform" ]
 __meta__ = {
 "_edit_group_": true
@@ -207,6 +230,28 @@ position = Vector2( 0.285917, 1.55667 )
 scale = Vector2( 14.2665, 22.4237 )
 shape = SubResource( 5 )
 
+[node name="BossHealth" type="Label" parent="Boss"]
+
+margin_left = -38.0
+margin_top = 104.0
+margin_right = 44.0
+margin_bottom = 170.0
+rect_scale = Vector2( 2.5, 2.5 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_colors/font_color = Color( 1, 0.843137, 0, 1 )
+text = "10"
+align = 1
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+script = ExtResource( 14 )
+_sections_unfolded = [ "Rect", "custom_colors" ]
+
 [node name="Timer" type="Timer" parent="."]
 
 process_mode = 1
@@ -217,7 +262,7 @@ autostart = true
 [node name="BossTimer" type="Timer" parent="."]
 
 process_mode = 1
-wait_time = 10.0
+wait_time = 15.0
 one_shot = false
 autostart = true
 
@@ -237,8 +282,8 @@ text = "Score: 0"
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
-script = ExtResource( 13 )
-_sections_unfolded = [ "Rect" ]
+script = ExtResource( 15 )
+_sections_unfolded = [ "custom_fonts" ]
 
 [connection signal="area_entered" from="Laser" to="Laser" method="_on_Laser_area_entered"]
 
