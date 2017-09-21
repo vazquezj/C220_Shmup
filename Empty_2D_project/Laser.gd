@@ -5,4 +5,3 @@ func _process(delta):
 
 func _on_Laser_area_entered( area ):
 	self.queue_free()
-	area.queue_free()

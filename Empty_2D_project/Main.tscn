@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Main.gd" type="Script" id=1]
 [ext_resource path="res://graphics/GalaxyBackgroundSprite.png" type="Texture" id=2]
@@ -8,8 +8,10 @@
 [ext_resource path="res://graphics/EnemySprite.png" type="Texture" id=6]
 [ext_resource path="res://Player.gd" type="Script" id=7]
 [ext_resource path="res://graphics/PlayerSprite.png" type="Texture" id=8]
-[ext_resource path="res://Score.gd" type="Script" id=9]
-[ext_resource path="res://graphics/GameOverSprite.png" type="Texture" id=10]
+[ext_resource path="res://Missile.gd" type="Script" id=9]
+[ext_resource path="res://graphics/MissileSprite.png" type="Texture" id=10]
+[ext_resource path="res://Score.gd" type="Script" id=11]
+[ext_resource path="res://graphics/GameOverSprite.png" type="Texture" id=12]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -22,6 +24,11 @@ custom_solver_bias = 0.0
 extents = Vector2( 10, 10 )
 
 [sub_resource type="RectangleShape2D" id=3]
+
+custom_solver_bias = 0.0
+extents = Vector2( 10, 10 )
+
+[sub_resource type="RectangleShape2D" id=4]
 
 custom_solver_bias = 0.0
 extents = Vector2( 10, 10 )
@@ -125,12 +132,47 @@ position = Vector2( -0.198797, 0.766616 )
 scale = Vector2( 4.06381, 5.31656 )
 shape = SubResource( 3 )
 
+[node name="Missile" type="Area2D" parent="."]
+
+position = Vector2( -107.449, 688.292 )
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+collision_layer = 2
+collision_mask = 4
+audio_bus_override = false
+audio_bus_name = "Master"
+script = ExtResource( 9 )
+_sections_unfolded = [ "Collision" ]
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="MissileSprite" type="Sprite" parent="Missile"]
+
+texture = ExtResource( 10 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Missile"]
+
+position = Vector2( -0.0339328, -0.20998 )
+scale = Vector2( 0.528982, 3.19782 )
+shape = SubResource( 4 )
+
 [node name="Timer" type="Timer" parent="."]
 
 process_mode = 1
 wait_time = 0.5
 one_shot = false
 autostart = true
+
+[node name="BossTimer" type="Timer" parent="."]
+
+process_mode = 1
+wait_time = 1.0
+one_shot = false
+autostart = false
 
 [node name="ScoreLabel" type="Label" parent="."]
 
@@ -148,14 +190,14 @@ text = "Score: 0"
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
-script = ExtResource( 9 )
+script = ExtResource( 11 )
 _sections_unfolded = [ "Rect" ]
 
 [node name="GameOver" type="Sprite" parent="."]
 
 visible = false
 position = Vector2( 247.204, 364.777 )
-texture = ExtResource( 10 )
+texture = ExtResource( 12 )
 _sections_unfolded = [ "Visibility" ]
 
 [connection signal="area_entered" from="Laser" to="Laser" method="_on_Laser_area_entered"]
@@ -163,6 +205,8 @@ _sections_unfolded = [ "Visibility" ]
 [connection signal="area_entered" from="Enemy" to="Enemy" method="_on_Enemy_area_entered"]
 
 [connection signal="area_entered" from="Player" to="Player" method="_on_Player_area_entered"]
+
+[connection signal="area_entered" from="Missile" to="Missile" method="_on_Missile_area_entered"]
 
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
 
